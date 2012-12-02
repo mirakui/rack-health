@@ -1,7 +1,8 @@
 module Rack
   class Health
-    def initialize(app)
+    def initialize(app, options={})
       @app = app
+      @options = {}
     end
 
     def call(env)
