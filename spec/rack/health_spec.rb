@@ -17,11 +17,77 @@ describe Rack::Health do
   let(:status) { subject[0] }
   let(:body) { str = ''; subject[2].each {|s| str += s }; str }
 
-  subject { app.call env }
-
   describe 'with default options' do
     let(:rack_health_options) { {} }
-    it { status.should == 200 }
-    it { body.should == "I'm base_app" }
+
+    describe '/' do
+      subject { app.call env('/') }
+
+      it { status.should == 200 }
+      it { body.should == "I'm base_app" }
+    end
+
+    describe '/rack_health' do
+      subject { app.call env('/rack_health') }
+
+      it { status.should == 200 }
+      it { body.should == 'Rack::Health says "healthy"' }
+    end
+  end
+
+  describe 'with :sick_if' do
+    subject { app.call env('/rack_health') }
+
+    describe '== lambda { true }' do
+      let(:rack_health_options) { { :sick_if => lambda { true } } }
+
+      it { status.should == 503 }
+      it { body.should == 'Rack::Health says "sick"' }
+    end
+
+    describe '== lambda { false }' do
+      let(:rack_health_options) { { :sick_if => lambda { false } } }
+
+      it { status.should == 200 }
+      it { body.should == 'Rack::Health says "healthy"' }
+    end
+  end
+
+  describe 'with :status' do
+    let(:status_proc) { lambda {|healthy| healthy ? 202 : 404 } }
+    subject { app.call env('/rack_health') }
+
+    context 'healthy' do
+      let(:rack_health_options) { { :sick_if => lambda { false }, :status_proc => status_proc } }
+
+      it { status.should == 202 }
+      it { body.should == 'Rack::Health says "healthy"' }
+    end
+
+    context 'sick' do
+      let(:rack_health_options) { { :sick_if => lambda { true }, :status_proc => status_proc } }
+
+      it { status.should == 404 }
+      it { body.should == 'Rack::Health says "sick"' }
+    end
+  end
+
+  describe 'with :body' do
+    let(:body_proc) { lambda {|healthy| healthy ? 'fine' : 'bad' } }
+    subject { app.call env('/rack_health') }
+
+    context 'healthy' do
+      let(:rack_health_options) { { :sick_if => lambda { false }, :body_proc => body_proc } }
+
+      it { status.should == 200 }
+      it { body.should == 'fine' }
+    end
+
+    context 'sick' do
+      let(:rack_health_options) { { :sick_if => lambda { true }, :body_proc => body_proc } }
+
+      it { status.should == 503 }
+      it { body.should == 'bad' }
+    end
   end
 end
