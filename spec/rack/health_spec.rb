@@ -58,14 +58,14 @@ describe Rack::Health do
     subject { app.call env('/rack_health') }
 
     context 'healthy' do
-      let(:rack_health_options) { { :sick_if => lambda { false }, :status_proc => status_proc } }
+      let(:rack_health_options) { { :sick_if => lambda { false }, :status => status_proc } }
 
       it { status.should == 202 }
       it { body.should == 'Rack::Health says "healthy"' }
     end
 
     context 'sick' do
-      let(:rack_health_options) { { :sick_if => lambda { true }, :status_proc => status_proc } }
+      let(:rack_health_options) { { :sick_if => lambda { true }, :status => status_proc } }
 
       it { status.should == 404 }
       it { body.should == 'Rack::Health says "sick"' }
@@ -77,17 +77,25 @@ describe Rack::Health do
     subject { app.call env('/rack_health') }
 
     context 'healthy' do
-      let(:rack_health_options) { { :sick_if => lambda { false }, :body_proc => body_proc } }
+      let(:rack_health_options) { { :sick_if => lambda { false }, :body => body_proc } }
 
       it { status.should == 200 }
       it { body.should == 'fine' }
     end
 
     context 'sick' do
-      let(:rack_health_options) { { :sick_if => lambda { true }, :body_proc => body_proc } }
+      let(:rack_health_options) { { :sick_if => lambda { true }, :body => body_proc } }
 
       it { status.should == 503 }
       it { body.should == 'bad' }
     end
+  end
+
+  describe 'with :path' do
+    subject { app.call env('/how_are_you') }
+    let(:rack_health_options) { { :path => '/how_are_you' } }
+
+    it { status.should == 200 }
+    it { body.should == 'Rack::Health says "healthy"' }
   end
 end
