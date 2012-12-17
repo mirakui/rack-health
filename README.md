@@ -23,7 +23,7 @@ $ curl localhost:3000/rack_health
 
 ## Customize url
 ```ruby
-use Rack::Health, :url => '/healthcheck'
+use Rack::Health, :path => '/healthcheck'
 ```
 
 ```
