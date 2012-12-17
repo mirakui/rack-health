@@ -1,8 +1,8 @@
 Gem::Specification.new do |spec|
   spec.name              = 'rack-health'
-  spec.version           = '0.1.0'
-  spec.summary           = 'summary'
-  spec.description       = 'description'
+  spec.version           = '0.1.1'
+  spec.summary           = 'A health check interface for rack applications.'
+  spec.description       = 'Rack::Health is a health check interface for rack applications.'
   spec.files             = Dir.glob("lib/**/*.rb")
   spec.author            = 'Issei Naruta'
   spec.email             = 'naruta@cookpad.com'
