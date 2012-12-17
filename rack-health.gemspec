@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name              = 'rack-health'
-  spec.version           = '0.0.1'
+  spec.version           = '0.1.0'
   spec.summary           = 'summary'
   spec.description       = 'description'
   spec.files             = Dir.glob("lib/**/*.rb")
