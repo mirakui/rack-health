@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name              = 'rack-health'
-  spec.version           = '0.1.1'
+  spec.version           = '0.1.2'
   spec.summary           = 'A health check interface for rack applications.'
   spec.description       = 'Rack::Health is a health check interface for rack applications.'
   spec.files             = Dir.glob("lib/**/*.rb")
