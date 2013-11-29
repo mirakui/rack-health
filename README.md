@@ -7,7 +7,7 @@ Rack::Health is a health check interface for rack applications.
 ## Install
 ```ruby
 # Gemfile
-gem 'rack-health', :require => 'rack/health'
+gem 'rack-health'
 ```
 
 ## Basic
