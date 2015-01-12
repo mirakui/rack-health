@@ -9,5 +9,5 @@ Gem::Specification.new do |spec|
   spec.homepage          = 'https://github.com/mirakui/rack-health'
   spec.has_rdoc          = false
   spec.add_dependency 'rack', '>= 1.2.0'
-  spec.add_development_dependency 'rspec', '>= 2.0.0'
+  spec.add_development_dependency 'rspec', '>= 2.0.0', '< 3.0'
 end
