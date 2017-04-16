@@ -12,8 +12,8 @@ gem 'rack-health'
 
 ## Basic
 ```ruby
-# config.ru
-use Rack::Health
+# config/appilcation.rb
+config.middleware.insert_before 0, Rack::Health
 ```
 
 ```
@@ -23,7 +23,7 @@ $ curl localhost:3000/rack_health
 
 ## Customize url
 ```ruby
-use Rack::Health, :path => '/healthcheck'
+config.middleware.insert_before 0, Rack::Health, :path => '/healthcheck'
 ```
 
 ```
@@ -33,7 +33,7 @@ $ curl localhost:3000/healthcheck
 
 ## Customize sick condition
 ```ruby
-use Rack::Health, :sick_if => lambda { File.exist?('/tmp/service_out') }
+config.middleware.insert_before 0, Rack::Health, :sick_if => lambda { File.exist?('/tmp/service_out') }
 ```
 
 ```
