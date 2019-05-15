@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.author            = 'Issei Naruta'
   spec.email             = 'naruta@cookpad.com'
   spec.homepage          = 'https://github.com/mirakui/rack-health'
+  spec.license           = 'MIT'
   spec.has_rdoc          = false
   spec.add_dependency 'rack', '>= 1.2.0'
   spec.add_development_dependency 'rspec', '>= 2.0.0', '< 3.0'
